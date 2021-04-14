@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
+    "webpack": "webpack --watch",
+    "build": "webpack",
+    "start:dev": "webpack serve",
     "lite-server": "lite-server"
   },
   "repository": {
@@ -19,10 +22,18 @@
   },
   "homepage": "https://github.com/taylor124/budget-tracker#readme",
   "dependencies": {
+    "bootstrap": "^4.6.0",
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "indexdb": "^0.0.0",
+    "loader": "^2.1.1",
     "mongoose": "^5.5.15",
     "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "webpack": "^5.32.0",
+    "webpack-bundle-analyzer": "^4.4.1",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }
