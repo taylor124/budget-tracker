@@ -49,20 +49,20 @@ self.addEventListener('activate', function (e) {
 
 self.addEventListener('fetch', function (e) {
     console.log('fetch request : ' + e.request.url)
-    if (evt.request.url.includes("/api/")) {
-        evt.respondWith(
+    if (e.request.url.includes("/api/")) {
+        e.respondWith(
           caches.open(APP_PREFIX + 'data').then(cache => {
-            return fetch(evt.request)
+            return fetch(e.request)
               .then(response => {
                 // If the response was good, clone it and store it in the cache.
                 if (response.status === 200) {
-                  cache.put(evt.request.url, response.clone());
+                  cache.put(e.request.url, response.clone());
                 }
                 return response;
               })
               .catch(err => {
                 // Network request failed, try to get it from the cache.
-                return cache.match(evt.request);
+                return cache.match(e.request);
               });
           }).catch(err => console.log(err))
         );
