@@ -1,3 +1,5 @@
+const { cache } = require("webpack");
+
 const APP_PREFIX = 'budget-';
 const VERSION = 'version_01';
 const CACHE_NAME = APP_PREFIX + VERSION;
@@ -10,6 +12,11 @@ const FILES_TO_CACHE = [
 ];
 
 self.addEventListener('install', function (e) {
+    // e.waitUntil(
+    //     caches.open(APP_PREFIX + 'data').then(cache => {
+    //         cache.add('/api')
+    //     })
+    // )
     e.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
             console.log('installing cache : ' + CACHE_NAME)
@@ -44,6 +51,25 @@ self.addEventListener('activate', function (e) {
 
 self.addEventListener('fetch', function (e) {
     console.log('fetch request : ' + e.request.url)
+    if (evt.request.url.includes("/api/")) {
+        evt.respondWith(
+          caches.open(APP_PREFIX + 'data').then(cache => {
+            return fetch(evt.request)
+              .then(response => {
+                // If the response was good, clone it and store it in the cache.
+                if (response.status === 200) {
+                  cache.put(evt.request.url, response.clone());
+                }
+                return response;
+              })
+              .catch(err => {
+                // Network request failed, try to get it from the cache.
+                return cache.match(evt.request);
+              });
+          }).catch(err => console.log(err))
+        );
+        return;
+      }
     e.respondWith(
         caches.match(e.request).then(function (request) {
             if (request) { // if cache is available, respond with cache
@@ -53,9 +79,6 @@ self.addEventListener('fetch', function (e) {
                 console.log('file is not cached, fetching : ' + e.request.url)
                 return fetch(e.request)
             }
-
-            // You can omit if/else for console.log & put one line below like this too.
-            // return request || fetch(e.request)
         })
     )
 })
