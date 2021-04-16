@@ -24,6 +24,7 @@ mongoose.connect(MONGODB_URI, {
 
 // routes
 app.use(require("./public/js/api.js"));
+app.use(require("./public/js/transaction.js"));
 
 mongoose.set('debug', true);
 
