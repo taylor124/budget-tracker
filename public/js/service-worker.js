@@ -7,8 +7,8 @@ const FILES_TO_CACHE = [
     "/css/styles.css",
     "/js/index.js",
     "/js/idb.js",
-    "/js/transaction.js",
-    "/js/api.js"
+    "/models/transaction.js",
+    "/routes/api.js"
 ];
 
 self.addEventListener('install', function (e) {

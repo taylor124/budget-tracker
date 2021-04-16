@@ -23,8 +23,8 @@ mongoose.connect(MONGODB_URI, {
 });
 
 // routes
-app.use(require("./public/js/api.js"));
-app.use(require("./public/js/transaction.js"));
+app.use(require("./public/routes/api.js"));
+app.use(require("./public/models/transaction.js"));
 
 mongoose.set('debug', true);
 
