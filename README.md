@@ -2,7 +2,7 @@
   <h1>budget-tracker <h1>
 
   ## <h2>Description</h2>
-  Allows Users to crwate and track a budget whether they are online or offline.
+  Allows Users to create and track a budget whether they are online or offline.
 
   ## Table of Contents
   - [Description](#description)
